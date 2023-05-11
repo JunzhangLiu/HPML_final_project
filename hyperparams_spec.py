@@ -25,9 +25,8 @@ optim=0
 num_blocks = 10
 input_frames = num_samples_per_sec
 num_heads = 8
-
 normalize_frame = 0
-
+input_channels = n_mels+1 if normalize_frame else n_mels
 num_embedding = 2048
 hidden_channel = 768
 
@@ -40,7 +39,7 @@ config['n_mels'] = n_mels
 config['lr'] = lr
 config['sample_step_size'] = sample_step_size
 config['num_embeddings']=num_embedding
-config['input_channels']=hidden_channel
+config['input_channels']=input_channels
 config['hidden_channels'] = hidden_channel
 config['num_blocks'] = num_blocks
 config['input_frames']=input_frames
