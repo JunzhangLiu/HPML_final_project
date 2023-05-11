@@ -50,6 +50,7 @@ Some helper functions
 
 ## Running The Code
 ### Collecting data
+Data should be under the folder ./data/  
 Somehow pytube no longer works on my computer, please download the portion of data I uploaded: https://drive.google.com/file/d/1UZlr7ryyfiC2nLx5D7M0ZjyLPJsT7D0w/view?usp=sharing which has 200 mp3 files. If you are using audio from other sources, please ensure there are at least 200 mp3 files, preferably all with a sample rate of 44100.  
 If you still want to try the data downloading program, please install the latest version of pytube then run download_data.py.
 
