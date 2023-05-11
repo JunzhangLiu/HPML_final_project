@@ -86,3 +86,7 @@ However, using a combination of L1 and L2 loss as loss function increases the fi
 <img src="./results/4.png" width="250" title="music to sample and loss">  
 The first figure shows scripting the spectrogram generator will result in some but not significant slow down, but scripting the music generator (token generator + spectrogram generator) will result in some speed up.
 
+## Wandb Logs:
+hyperparam sweep 1: https://wandb.ai/junzhangliu/music_gen_linear_sweep?workspace=user-ayhexinf  
+hyperparam sweep 2: https://wandb.ai/junzhangliu/music_gen_frame_op?workspace=user-ayhexinf  
+
