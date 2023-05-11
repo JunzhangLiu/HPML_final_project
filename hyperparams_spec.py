@@ -29,10 +29,11 @@ num_heads = 8
 normalize_frame = 0
 
 num_embedding = 2048
-hidden_channel = n_mels+1 if normalize_frame else n_mels
+hidden_channel = 768
 
 
 config = dict()
+config['batch_size'] = batch_size
 config['num_musics_to_sample'] = num_musics_to_sample
 config['hop_len'] = hop_len
 config['n_mels'] = n_mels

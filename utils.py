@@ -91,12 +91,12 @@ def init_run(config):
                                  config,mode='val')
     
     train_loader = DataLoader(dataset=train_dataset,
-                            batch_size=batch_size,
+                            batch_size=config['batch_size'],
                             shuffle=False,num_workers=config['num_worker'], drop_last=False,
                             pin_memory=True,worker_init_fn=worker_init_fn,collate_fn=Batch_collator())
     
     val_loader = DataLoader(dataset=val_dataset,
-                            batch_size=batch_size,
+                            batch_size=config['batch_size'],
                             shuffle=False,num_workers=config['num_worker'], drop_last=False,
                             pin_memory=True,worker_init_fn=worker_init_fn,collate_fn=Batch_collator())
     model = Spectrogram_generator(config)
