@@ -148,7 +148,7 @@ if __name__ == '__main__':
         os.makedirs(model_dir)
     starting_epoch,global_step = load_model(model,model_dir)
     
-
+    print('starting from',starting_epoch)
     writer = SummaryWriter(logdir = logdir)
 
     model.set_opt(torch.optim.Adam,lr=lr)

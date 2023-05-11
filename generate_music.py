@@ -64,7 +64,7 @@ class Music_generator(nn.Module):
 def load_models(frame_enc_dir,auto_enc_dir):
     frame_op_enc,frame_op_dec=0,1
     context_length=63
-    config = creat_config(frame_op_enc,frame_op_dec,normalization,activation,loss,normalize_frame,context_length,optim)
+    creat_config(config,frame_op_enc,frame_op_dec,normalization,activation,loss,normalize_frame,context_length,optim)
     config['lr'] = lr
     config['num_embeddings']=num_embedding
     config['input_channels']=257 if config['normalize_frame'] else 256
@@ -74,14 +74,20 @@ def load_models(frame_enc_dir,auto_enc_dir):
     config['num_worker'] = 5
     config['num_heads'] = 8
     spec_generator = Spectrogram_generator(config)
-    trained_models = os.listdir(frame_enc_dir)
+    if os.path.exists(frame_enc_dir):
+        trained_models = os.listdir(frame_enc_dir)
+    else:
+        trained_models = []
     if trained_models:
         model_idx = sorted([(int(i.split('_')[0]),idx) for idx,i in enumerate(trained_models)],key=lambda x:x[0])[-1][-1]
         fn = trained_models[model_idx]
         spec_generator.load_state_dict(torch.load(frame_enc_dir+fn))
     spec_generator.to(device)
     token_generator = Token_generator(2048,768)
-    trained_model = os.listdir(auto_enc_dir)
+    if os.path.exists(auto_enc_dir):
+        trained_model = os.listdir(auto_enc_dir)
+    else:
+        trained_models = []
     if trained_model and trained_model!=['0_0']:
         model_idx = sorted([(int(i.split('_')[0]),idx) for idx,i in enumerate(trained_model)],key=lambda x:x[0])[-1][-1]
         fn = trained_model[model_idx]
@@ -123,13 +129,14 @@ def generate_music(model,args,model_name,fn = None):
     spec_generating_time = time.time()
     if fn is not None:
         mel_to_audio(pred.detach().cpu().numpy(),'./generated_music/'+fn+'.wav',44100,hop_len=700)
-        audio_generating_time = spec_generating_time- time.time()
+        audio_generating_time = time.time() - spec_generating_time
     else:
         audio_generating_time='N/A'
+    end_time = time.time()
     print("Model: {}\n\
         total time {}\n\
         time to generate spectrogram {}\n\
-        time to generate audio {}".format(model_name,audio_generating_time-start,spec_generating_time-start,audio_generating_time))
+        time to generate audio {}".format(model_name,end_time-start,spec_generating_time-start,audio_generating_time))
     
     
 if __name__ == "__main__":

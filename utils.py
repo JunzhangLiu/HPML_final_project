@@ -2,7 +2,6 @@ import torch
 import sys
 from tensorboardX import SummaryWriter
 from typing import List
-from hyperparams_spec import *
 from model import *
 from data import *
 from torch.utils.data import DataLoader
@@ -109,7 +108,10 @@ def init_run(config):
     return model,optim,preprocessing,train_loader,val_loader
     
 def load_model(model,path):
-    trained_model = os.listdir(path)
+    if os.path.exists(path):
+        trained_model = os.listdir(path)
+    else:
+        trained_model = []
     if trained_model and trained_model!=['0_0']:
         model_idx = sorted([(int(i.split('_')[0]),idx) for idx,i in enumerate(trained_model)],key=lambda x:x[0])[-1][-1]
         fn = trained_model[model_idx]
